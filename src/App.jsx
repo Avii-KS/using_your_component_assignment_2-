@@ -1,7 +1,6 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
+import React, { useState } from 'react';
+import PostCard from './components/postcard'; // Adjust the path if necessary
+import './App.css';
 
 function App() {
 
@@ -29,11 +28,24 @@ function App() {
     },
   ];
 
+  const [posts, setPosts] = useState(initialPosts);
+
+  // Update the liked status for a specific post
+  const handleLikeToggle = (postId, newStatus) => {
+    const updatedPosts = posts.map((post) =>
+      post.id === postId ? { ...post, isLiked: newStatus } : post
+    );
+    setPosts(updatedPosts);
+  };
+  
   return (
-    <>
-      
-    </>
-  )
-}
+    <div className="App">
+      <h1>User Posts</h1>
+      {posts.map((post) => (
+        <PostCard key={post.id} post={post} onLikeToggle={handleLikeToggle} />
+      ))}
+    </div>
+  );
+      }
 
 export default App
